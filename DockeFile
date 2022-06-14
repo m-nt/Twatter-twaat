@@ -1,0 +1,7 @@
+FROM python:3
+WORKDIR /twaat
+COPY requirements.txt requirements.txt
+RUN pip3 install --upgrade pip
+RUN pip3 install requirements.txt
+COPY . /twaat
+EXPOSE 8000
