@@ -5,7 +5,6 @@ from fastapi.encoders import jsonable_encoder
 from models.Schemas import *
 from models.Datatypes import *
 from tools.useful import *
-import dotenv
 
 client = motor.motor_asyncio.AsyncIOMotorClient(os.getenv("MONGODB_URL"))
 db = client["twatter"]
@@ -21,6 +20,19 @@ async def add_twaat(twaat: TwaatInput, token: str) -> TwaatReturn:
     if result:
         return TwaatReturn.parse_obj(result)
     return TwaatReturn({})
+
+
+async def get_twaats(
+    self, token: Union[str, None] = "", count: Union[int, None] = 10
+) -> Schema:
+    is_login = await check_if_loggin(token)
+    if is_login is False:
+        return Schema([])
+    result = await db["twaats"].find().to_list(length=count)
+    twaats: List[Twaat] = []
+    for document in result:
+        twaats.append(Twaat(dict=document))
+    return Schema(twaats=twaats)
 
 
 def echo(self, echo: Union[str, None] = "") -> str:

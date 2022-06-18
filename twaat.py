@@ -12,6 +12,7 @@ dotenv.load_dotenv()
 
 @strawberry.type
 class Query:
+    twaat: Schema = strawberry.field(resolver=get_twaats)
     echo: Union[str, None] = strawberry.field(resolver=echo)
 
 

@@ -5,4 +5,4 @@ from models.Datatypes import *
 
 @strawberry.type
 class Schema:
-    users: List[User]
+    twaats: List[Twaat]
