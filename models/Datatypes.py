@@ -1,10 +1,12 @@
 import strawberry
+from pydantic import Field
 
 
 @strawberry.type
 class Twaat:
     pk: str
     message: str
+    id: str = ""
     reply_to: str = ""
     like_to: str = ""
 
@@ -26,6 +28,7 @@ class TwaatInput:
 
 @strawberry.type
 class TwaatReturn:
+    id: str = ""
     pk: str = ""
     message: str = ""
     reply_to: str = ""
